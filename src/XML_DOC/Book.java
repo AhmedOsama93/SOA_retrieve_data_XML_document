@@ -1,7 +1,5 @@
 package XML_DOC;
 
-import java.util.Date;
-
 public class Book {
     String Id;
     String Author;
