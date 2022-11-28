@@ -8,11 +8,11 @@ public class Book {
     String Title;
     String Genre;
     double Price;
-    Date Publish_Date;
+    String Publish_Date;
     String Description;
 
     public Book(String id, String author, String title, String genre,
-                double price, Date publish_Date, String description) {
+                double price, String publish_Date, String description) {
         Id = id;
         Author = author;
         Title = title;
