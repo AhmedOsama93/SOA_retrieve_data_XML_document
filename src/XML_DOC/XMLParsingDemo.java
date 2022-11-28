@@ -1,7 +1,7 @@
 package XML_DOC;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import javax.print.attribute.Attribute;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.*;
@@ -12,6 +12,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.traversal.DocumentTraversal;
+import org.w3c.dom.traversal.NodeFilter;
+import org.w3c.dom.traversal.NodeIterator;
 
 
 public class XMLParsingDemo {
@@ -52,10 +55,13 @@ public class XMLParsingDemo {
             System.out.println(book.toString());
         }
     }
-    void addToFile(Document document,Transformer transf){
+
+
+    void addToFile(Document document,Book newBook,Transformer transf){
         try {
+            removeWhitespace(document);
             Element root = document.getDocumentElement();
-            Node book1 = createBook(document,"dsfa","sdkla","lsdj","dsfa",389.3,"sdlkfj","lksdjf");
+            Node book1 = createBook(document,newBook.Id,newBook.Author,newBook.Title,newBook.Genre,newBook.Price,newBook.Publish_Date,newBook.Description);
             root.appendChild(book1);
 
             DOMSource source = new DOMSource(document);
@@ -66,33 +72,92 @@ public class XMLParsingDemo {
             throw new RuntimeException(e);
         }
     }
+    void deleteBook(Document document,String id,Transformer transf){
+        NodeList books = document.getElementsByTagName("Book");
+        for (int i = 0; i < books.getLength(); i++) {
+            Element book = (Element)books.item(i);
+
+            String bookId = book.getAttribute("ID");
+            if (id.equals(bookId)) {
+                book.getParentNode().removeChild(book);
+            }
+        }
+        DOMSource source = new DOMSource(document);
+        File myFile = new File("src/XML_DOC/Catalogue.xml");
+        StreamResult file = new StreamResult(myFile);
+        try {
+            transf.transform(source, file);
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static void main(String[] args) {
 
         try {
             //Get Document Builder
+// ------------------------------------------------------parse or create document
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            // Load the input XML document, parse it and return an instance of the
-            // Document class.
-
-            if(!new File("src/XML_DOC/Catalogue.xml").exists()){
-                System.out.println("here we will create a new file");
+            Document document;
+            if(new File("src/XML_DOC/Catalogue.xml").exists()){//check if the file exists
+                 document = builder.parse(new File("src/XML_DOC/Catalogue.xml"));//parse it
+            }else {
+                document = builder.newDocument();//create new document
+                Element root = document.createElement( "Catalogue");
+                document.appendChild(root);
             }
-
-            Document document = builder.parse(new File("src/XML_DOC/Catalogue.xml"));
+//------------------------------------------------------instance of the class
             XMLParsingDemo demo=new XMLParsingDemo();
 //------------------------------------------------------for saving file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transf = null;
             transf = transformerFactory.newTransformer();
             transf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            transf.setOutputProperty(OutputKeys.INDENT, "yes"); //this line makes extra indentation each time
-//------------------------------------------------------
-
+            transf.setOutputProperty(OutputKeys.INDENT, "yes");
 
 //-------------------------------------------------------our functions()
-            demo.printFile(document);
-            demo.addToFile(document,transf);
+            System.out.println("Hello :)");
+            while (true){
+                System.out.println("1:print all records");
+                System.out.println("2:add new record");
+                System.out.println("3:delete a record");
+                System.out.println("4:search");
+                System.out.println("5:exit");
+                Scanner scanner = new Scanner(System.in);
+                int input = scanner.nextInt();
+                scanner.nextLine();
+                if(input==1){
+                    demo.printFile(document);
+                }else if (input==2){
+                    Book newBook=new Book();
+                    System.out.println("Enter the book Id");
+                    newBook.setId(scanner.nextLine());
+                    System.out.println("Enter the book Author");
+                    newBook.setAuthor(scanner.nextLine());
+                    System.out.println("Enter the book Title");
+                    newBook.setTitle(scanner.nextLine());
+                    System.out.println("Enter the book Genre");
+                    newBook.setGenre(scanner.nextLine());
+                    System.out.println("Enter the book price");
+                    newBook.setPrice(scanner.nextDouble());
+                    scanner.nextLine();
+                    System.out.println("Enter the book Publish date");
+                    newBook.setPublish_Date(scanner.nextLine());
+                    System.out.println("Enter the book Description");
+                    newBook.setDescription(scanner.nextLine());
+
+                    demo.addToFile(document,newBook,transf);
+                }else if (input==3){
+                    System.out.println("Enter Id to be deleted:");
+                    String deleteId = scanner.nextLine();
+                    demo.deleteBook(document,deleteId,transf);
+                }else if (input==4){
+
+                }else if (input==5){
+                 break;
+                }
+            }
+
 //-------------------------------------------------------
 
         } catch (Exception e) {
@@ -116,13 +181,25 @@ public class XMLParsingDemo {
 
         return book;
     }
+    public static void removeWhitespace(Document document) {
+        Set<Node> toRemove = new HashSet<Node>();
+        DocumentTraversal t = (DocumentTraversal) document;
+        NodeIterator it = t.createNodeIterator(document,
+                NodeFilter.SHOW_TEXT, null, true);
 
-    private static Node createBookElement(Document doc, String name,
-                                          String value) {
+        for (Node n = it.nextNode(); n != null; n = it.nextNode()) {
+            if (n.getNodeValue().trim().isEmpty()) {
+                toRemove.add(n);
+            }
+        }
 
+        for (Node n : toRemove) {
+            n.getParentNode().removeChild(n);
+        }
+    }
+    private static Node createBookElement(Document doc, String name, String value) {
         Element node = doc.createElement(name);
         node.appendChild(doc.createTextNode(value));
-
         return node;
     }
 

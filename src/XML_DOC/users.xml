@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<users>
+    
+  
+  <user id="11">
+        
+    <firstname>Robert</firstname>
+        
+    <lastname>Brown</lastname>
+        
+    <occupation>programmer</occupation>
+      
+  </user>
+    
+  <user id="22">
+        
+    <firstname>Pamela</firstname>
+        
+    <lastname>Kyle</lastname>
+        
+    <occupation>writer</occupation>
+      
+  </user>
+    
+  <user id="33">
+        
+    <firstname>Peter</firstname>
+        
+    <lastname>Smith</lastname>
+        
+    <occupation>teacher</occupation>
+      
+  </user>
+  
+  <user id="11">
+    <firstname>Robert</firstname>
+    <lastname>Brown</lastname>
+    <occupation>programmer</occupation>
+  </user>
+  <user id="22">
+    <firstname>Pamela</firstname>
+    <lastname>Kyle</lastname>
+    <occupation>writer</occupation>
+  </user>
+  <user id="33">
+    <firstname>Peter</firstname>
+    <lastname>Smith</lastname>
+    <occupation>teacher</occupation>
+  </user>
+</users>
