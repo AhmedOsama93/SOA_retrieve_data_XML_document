@@ -80,6 +80,7 @@ public class XMLParsingDemo {
     }
     void deleteBook(Document document,String id,Transformer transf){
         NodeList books = document.getElementsByTagName("Book");
+        removeWhitespace(document);
         for (int i = 0; i < books.getLength(); i++) {
             Element book = (Element)books.item(i);
             String bookId = book.getAttribute("ID");
@@ -169,6 +170,7 @@ public class XMLParsingDemo {
                     String genre=scanner.nextLine();
                     System.out.println("Enter the book Price");
                     double price = scanner.nextDouble();
+                    scanner.nextLine();
                     System.out.println("Enter the book Publish Date");
                     String date = scanner.nextLine();
                     System.out.println("Enter the book Description");
@@ -182,6 +184,7 @@ public class XMLParsingDemo {
                     newBook.setPrice(price);
                     newBook.setPublish_Date(date);
                     newBook.setDescription(description);
+
                     demo.addToFile(document,newBook,transf);
                 }
                 else if (input==3){

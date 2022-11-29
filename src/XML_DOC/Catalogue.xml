@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Catalogue>
-    <Book ID="BK101">
-        <Author>Gambardella, Matthew</Author>
-        <Title>XML Developer’s Guide</Title>
-        <Genre>Computer</Genre>
-        <Price>44.95</Price>
-        <Publish_Date>2000-11-01</Publish_Date>
-        <Description>A guide for developers on how to create applications using XML.</Description>
-    </Book>
     <Book ID="BK103">
         <Author>Gambardella, Matthew</Author>
         <Title>XML Developer’s Guide</Title>
@@ -24,5 +16,4 @@
         <Publish_Date>2000-11-01</Publish_Date>
         <Description>A guide for developers on how to create applications using XML.</Description>
     </Book>
-
 </Catalogue>
