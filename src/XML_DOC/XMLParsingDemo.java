@@ -18,7 +18,8 @@ import org.w3c.dom.traversal.NodeIterator;
 
 
 public class XMLParsingDemo {
-    void printFile(Document document){
+    static Map<String, Boolean>perviousIds = new HashMap<String, Boolean>();
+    List<Book>parsingFile(Document document) {
         List<Book> books = new ArrayList<Book>();
         NodeList nodeList = document.getDocumentElement().getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -27,7 +28,7 @@ public class XMLParsingDemo {
                 Element elem = (Element) node;
                 // Get the value of the ID attribute.
                 String id = node.getAttributes().getNamedItem("ID").getNodeValue();
-
+                perviousIds.put(id, true);
                 // Get the value of all sub-elements.
                 String author = elem.getElementsByTagName("Author")
                         .item(0).getChildNodes().item(0).getNodeValue();
@@ -48,9 +49,13 @@ public class XMLParsingDemo {
                         .item(0).getChildNodes().item(0).getNodeValue();
 //String id, String author, String title, String genre,
 //                double price, Date publish_Date, String description
-                books.add(new Book(id, author, title, genre,price, publish_Date, description));
+                books.add(new Book(id, author, title, genre, price, publish_Date, description));
             }
         }
+        return books;
+    }
+    void printFile(Document document){
+        List<Book>books=parsingFile(document);
         for (Book book : books) {
             System.out.println(book.toString());
         }
@@ -68,7 +73,8 @@ public class XMLParsingDemo {
             File myFile = new File("src/XML_DOC/Catalogue.xml");
             StreamResult file = new StreamResult(myFile);
             transf.transform(source, file);
-        } catch (TransformerException e) {
+        }
+        catch (TransformerException e) {
             throw new RuntimeException(e);
         }
     }
@@ -76,7 +82,6 @@ public class XMLParsingDemo {
         NodeList books = document.getElementsByTagName("Book");
         for (int i = 0; i < books.getLength(); i++) {
             Element book = (Element)books.item(i);
-
             String bookId = book.getAttribute("ID");
             if (id.equals(bookId)) {
                 book.getParentNode().removeChild(book);
@@ -87,12 +92,30 @@ public class XMLParsingDemo {
         StreamResult file = new StreamResult(myFile);
         try {
             transf.transform(source, file);
-        } catch (TransformerException e) {
+        }
+        catch (TransformerException e) {
             throw new RuntimeException(e);
         }
     }
-    public static void main(String[] args) {
 
+    void findBookByTitle(Document document,String title){
+        List<Book>books=parsingFile(document);
+        for (Book book : books) {
+            if(book.getTitle().equals(title)){
+                System.out.println(book.toString());
+            }
+        }
+    }
+    void findBookByAuthor(Document document,String author){
+        List<Book>books=parsingFile(document);
+        for (Book book : books) {
+            if(book.getAuthor().equals(author)){
+                System.out.println(book.toString());
+            }
+        }
+    }
+
+    public static void main(String[] args) {
         try {
             //Get Document Builder
 // ------------------------------------------------------parse or create document
@@ -101,7 +124,8 @@ public class XMLParsingDemo {
             Document document;
             if(new File("src/XML_DOC/Catalogue.xml").exists()){//check if the file exists
                  document = builder.parse(new File("src/XML_DOC/Catalogue.xml"));//parse it
-            }else {
+            }
+            else {
                 document = builder.newDocument();//create new document
                 Element root = document.createElement( "Catalogue");
                 document.appendChild(root);
@@ -128,39 +152,67 @@ public class XMLParsingDemo {
                 scanner.nextLine();
                 if(input==1){
                     demo.printFile(document);
-                }else if (input==2){
+                }
+                else if (input==2){
                     Book newBook=new Book();
                     System.out.println("Enter the book Id");
-                    newBook.setId(scanner.nextLine());
+                    String id=scanner.nextLine();
+                    if(perviousIds.get(id)!=null && perviousIds.get(id)==true){
+                        System.out.println("This id was added before.\n");
+                        continue;
+                    }
                     System.out.println("Enter the book Author");
-                    newBook.setAuthor(scanner.nextLine());
+                    String author=scanner.nextLine();
                     System.out.println("Enter the book Title");
-                    newBook.setTitle(scanner.nextLine());
+                    String title=scanner.nextLine();
                     System.out.println("Enter the book Genre");
-                    newBook.setGenre(scanner.nextLine());
-                    System.out.println("Enter the book price");
-                    newBook.setPrice(scanner.nextDouble());
-                    scanner.nextLine();
-                    System.out.println("Enter the book Publish date");
-                    newBook.setPublish_Date(scanner.nextLine());
+                    String genre=scanner.nextLine();
+                    System.out.println("Enter the book Price");
+                    double price = scanner.nextDouble();
+                    System.out.println("Enter the book Publish Date");
+                    String date = scanner.nextLine();
                     System.out.println("Enter the book Description");
-                    newBook.setDescription(scanner.nextLine());
+                    String description = scanner.nextLine();
 
+                    //***********************************************
+                    newBook.setId(id);
+                    newBook.setAuthor(author);
+                    newBook.setTitle(title);
+                    newBook.setGenre(genre);
+                    newBook.setPrice(price);
+                    newBook.setPublish_Date(date);
+                    newBook.setDescription(description);
                     demo.addToFile(document,newBook,transf);
-                }else if (input==3){
+                }
+                else if (input==3){
                     System.out.println("Enter Id to be deleted:");
                     String deleteId = scanner.nextLine();
                     demo.deleteBook(document,deleteId,transf);
-                }else if (input==4){
-
-                }else if (input==5){
-                 break;
+                }
+                else if (input==4){
+                    System.out.println("1: Search by title");
+                    System.out.println("2: Search by Author");
+                    Scanner scanner1 = new Scanner(System.in);
+                    int wayForSearch=scanner1.nextInt();
+                    scanner1.nextLine();
+                    if (wayForSearch==1){
+                        System.out.println("Enter the book Title");
+                        String tit = scanner1.nextLine();
+                        demo.findBookByTitle(document,tit);
+                    }
+                    else if (wayForSearch==2){
+                        System.out.println("Enter the book Author");
+                        String aut = scanner.nextLine();
+                        demo.findBookByAuthor(document,aut);
+                    }
+                }
+                else if (input==5){
+                    break;
                 }
             }
-
 //-------------------------------------------------------
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -170,7 +222,6 @@ public class XMLParsingDemo {
                                    String Title, String Genre,double Price, String Publish_Date,String Description) {
 
         Element book = doc.createElement("Book");
-
         book.setAttribute("ID", id);
         book.appendChild(createBookElement(doc, "Author", Author));
         book.appendChild(createBookElement(doc, "Title", Title));
@@ -178,7 +229,6 @@ public class XMLParsingDemo {
         book.appendChild(createBookElement(doc, "Price", Double.toString(Price)));
         book.appendChild(createBookElement(doc, "Publish_Date", Publish_Date));
         book.appendChild(createBookElement(doc, "Description", Description));
-
         return book;
     }
     public static void removeWhitespace(Document document) {
@@ -192,7 +242,6 @@ public class XMLParsingDemo {
                 toRemove.add(n);
             }
         }
-
         for (Node n : toRemove) {
             n.getParentNode().removeChild(n);
         }
