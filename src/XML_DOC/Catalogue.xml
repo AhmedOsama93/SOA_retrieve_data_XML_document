@@ -5,7 +5,7 @@
         <Title>ssss</Title>
         <Genre>Drama</Genre>
         <Price>12.0</Price>
-        <Publish_Date>Tue Dec 12 00:00:00 EET 13</Publish_Date>
+        <Publish_Date>Wed Nov 11 00:00:00 EET 11</Publish_Date>
         <Description>suigsdo</Description>
     </Book>
     <Book ID="111">
@@ -17,20 +17,12 @@
         <Description>sss</Description>
     </Book>
     <Book ID="112">
-        <Author>hhh</Author>
-        <Title>jjjj</Title>
-        <Genre>Fiction</Genre>
-        <Price>100.0</Price>
-        <Publish_Date>Mon Dec 12 00:00:00 EET 12</Publish_Date>
-        <Description>jgjdfjf</Description>
-    </Book>
-    <Book ID="BK104">
-        <Author>gambardella, Matthew</Author>
-        <Title>XML Developer’s Guide</Title>
-        <Genre>Computer</Genre>
-        <Price>44.95</Price>
-        <Publish_Date>2000-11-01</Publish_Date>
-        <Description>A guide for developers on how to create applications using XML.</Description>
+        <Author>updated</Author>
+        <Title>newTitle</Title>
+        <Genre>Drama</Genre>
+        <Price>987.0</Price>
+        <Publish_Date>Thu Dec 01 00:00:00 EET 12</Publish_Date>
+        <Description>fdsf</Description>
     </Book>
     <Book ID="hasdhlf">
         <Author>dsdsf</Author>
@@ -40,14 +32,6 @@
         <Publish_Date>Mon Dec 26 05:27:49 EET 2022</Publish_Date>
         <Description>kdfs</Description>
     </Book>
-    <Book ID="BK102">
-        <Author>ahmed</Author>
-        <Title>rrrr</Title>
-        <Genre>nhfkdhniofgd</Genre>
-        <Price>100.0</Price>
-        <Publish_Date>11-11-11</Publish_Date>
-        <Description>hjigdsuoguodshighduksagiodsfuo;ahuifhapsd jigvidsguiodsfofhdsgdsfhds</Description>
-    </Book>
     <Book ID="BK103">
         <Author>abdoabdoh</Author>
         <Title>abdo wrote this book</Title>
@@ -55,5 +39,21 @@
         <Price>99.0</Price>
         <Publish_Date>2000-11-01</Publish_Date>
         <Description>A guide for developers on how to create applications using XML.</Description>
+    </Book>
+    <Book ID="BK104">
+        <Author>gambardella, Matthew</Author>
+        <Title>XML Developer’s Guide</Title>
+        <Genre>Computer</Genre>
+        <Price>44.95</Price>
+        <Publish_Date>2000-11-01</Publish_Date>
+        <Description>A guide for developers on how to create applications using XML.</Description>
+    </Book>
+    <Book ID="BK102">
+        <Author>ahmed</Author>
+        <Title>rrrr</Title>
+        <Genre>nhfkdhniofgd</Genre>
+        <Price>100.0</Price>
+        <Publish_Date>11-11-11</Publish_Date>
+        <Description>hjigdsuoguodshighduksagiodsfuo;ahuifhapsd jigvidsguiodsfofhdsgdsfhds</Description>
     </Book>
 </Catalogue>

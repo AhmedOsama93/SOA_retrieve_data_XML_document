@@ -22,11 +22,10 @@ public class Checkers {
     }
 
     public String checkAuthorName() {
-        String author;
+        String author="";
         while (true) {
-            author = scanner.nextLine();
             try {
-                System.out.println("Enter the book Author name");
+                author = scanner.nextLine();
             }
             catch (Exception e) {
             }
@@ -104,7 +103,7 @@ public class Checkers {
                 }
             }
             catch (ParseException e) {
-                System.out.println("enter date in Date format yyyy-MM-dd");
+                System.out.println("enter date in Date format yyyy/MM/dd");
             }
         }
         return d;
