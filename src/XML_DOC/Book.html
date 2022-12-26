@@ -1,0 +1,70 @@
+<html>
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="
+        signUp.css">
+  <link rel="stylesheet" href="fontawesome-free-6.1.1-web/css/all.min.css">
+  <script type="text/javascript" src="signUp.js"></script>
+</head>
+<body onload="onLoad()">
+<div>
+  <div>
+    <div>
+      <h1  style="color: #406E3F; font-size: 40px;">Add Book</h1>
+      <p style="color: #406E3F; margin: 10px;">Please fill in this form to create a <strong>Book</strong>.
+        <br>
+      </p>
+
+      <label style="color: #406E3F; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; "><b >ID</b></label><br>
+      <input style="padding: 5px; width: 40%; font-size: 14px; " id="ID" type="text" placeholder="ID" required>
+
+      <br>
+      <label style="color: #406E3F; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><b >Author name</b></label><br>
+      <input style="padding: 5px; width: 40%; font-size: 14px; " id="user" type="text" placeholder="Author name" required>
+      <i id="firstNameWarning" ></i>
+      <br>
+      <label style="color: #406E3F; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><b >Title</b></label><br>
+      <input style="padding: 5px; width: 40%; font-size: 14px; " id="lastName" type="text" placeholder="Title" required>
+      <i id="lastNameWarning" ></i>
+      <br>
+      <label style="color: #406E3F; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><b >book Genre</b></label><br>
+      <input style="padding: 5px; width: 40%; font-size: 14px; " id="pass" type="text" placeholder="book Genre" required>
+      <i id="passwordWarning" ></i>
+      <br>
+      <label style="color: #406E3F; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><b >Price</b></label>
+      <br>
+      <input style="padding: 5px; width: 40%; font-size: 14px; " id="con" type="double" placeholder="Price" required>
+      <i id="confirmationWarning" ></i>
+      <br>
+      <label style="color: #406E3F; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><b >Publish Date</b></label>
+      <br>
+      <input style="padding: 5px; width: 40%; font-size: 14px; " id="con1" type="date" placeholder="Publish Date" required>
+      <i id="publishDateWarning" ></i>
+      <br>
+      <label style="color: #406E3F; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><b >Description</b></label>
+      <br>
+      <input style="padding: 5px; width: 40%; font-size: 14px; " id="con2" type="text" placeholder="Description" required>
+      <i id="DescriptionWarning" ></i>
+      <br>
+
+      <div >
+        <button
+          style="
+                margin: 10px;
+                border: 2px solid #406E3F;
+                border-radius: 10px;
+                width: 30%;
+                background-color: #406E3F;
+                height: 35px;
+                color: white;
+                transition: 0.08s;
+                box-shadow: 0 1px 2px 0 #406E3F;"
+          type="button" onclick="onSubmitClick()"> ADD Book</button>
+      </div>
+      <br>
+      </form>
+    </div>
+  </div>
+  <!-- <script src="js/signUp.js"></script> -->
+</body>
+</html>

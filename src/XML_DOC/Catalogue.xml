@@ -48,4 +48,12 @@
         <Publish_Date>Mon Dec 12 00:00:00 EET 12</Publish_Date>
         <Description>jgjdfjf</Description>
     </Book>
+    <Book ID="ssss">
+        <Author>ssssss</Author>
+        <Title>ssss</Title>
+        <Genre>Drama</Genre>
+        <Price>12.0</Price>
+        <Publish_Date>Tue Dec 12 00:00:00 EET 13</Publish_Date>
+        <Description>suigsdo</Description>
+    </Book>
 </Catalogue>
