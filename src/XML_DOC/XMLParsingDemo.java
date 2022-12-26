@@ -88,7 +88,7 @@ public class XMLParsingDemo {
 
                 Double price = parseDouble(elem.getElementsByTagName("Price")
                         .item(0).getChildNodes().item(0).getNodeValue());
-                if (searchMethod.equals("price") && price == parseDouble(wanted)){
+                if (searchMethod.equals("price") && Double.toString(price).equals(wanted)){
                     flag =true;
                 }
                 String publish_Date = elem.getElementsByTagName("Publish_Date")
