@@ -114,6 +114,15 @@ public class XMLParsingDemo {
             }
         }
     }
+    Book findBookById(Document document,String id){
+        List<Book>books=parsingFile(document);
+        for (Book book : books) {
+            if(book.getId().equals(id)){
+                return book;
+            }
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         try {
@@ -148,15 +157,22 @@ public class XMLParsingDemo {
                 System.out.println("2:add new record");
                 System.out.println("3:delete a record");
                 System.out.println("4:search");
-                System.out.println("5:exit");
+                System.out.println("5:update");
+                System.out.println("6:exit");
                 Scanner scanner = new Scanner(System.in);
-                int input = scanner.nextInt();
+                int input;
+                try {
+                    input = scanner.nextInt();
+                }catch (Exception e){
+                    System.out.println("Wrong input");
+                    continue;
+                }
                 scanner.nextLine();
                 switch(input) {
-                    case 1:
+                    case 1://print all records
                         demo.printFile(document);
                         break;
-                    case 2:
+                    case 2://add new record
                         Book newBook = new Book();
                         System.out.println("Enter the book Id");
                         String id = checkers.checkPreviousId(perviousIds);
@@ -192,12 +208,12 @@ public class XMLParsingDemo {
 
                         demo.addToFile(document, newBook, transf);
                         break;
-                    case 3:
+                    case 3://delete a record
                         System.out.println("Enter Id to be deleted:");
                         String deleteId = scanner.nextLine();
                         demo.deleteBook(document, deleteId, transf);
                         break;
-                    case 4:
+                    case 4://search
                         System.out.println("1: Search by title");
                         System.out.println("2: Search by Author");
                         Scanner scanner1 = new Scanner(System.in);
@@ -213,7 +229,71 @@ public class XMLParsingDemo {
                             demo.findBookByAuthor(document, aut);
                         }
                         break;
-                    case 5: return ;
+                    case 5://update
+                        System.out.println("Enter the book Id to edit");
+                        String updateId = scanner.nextLine();
+                        Book bookToBeUpdated = demo.findBookById(document, updateId);
+                        if(bookToBeUpdated==null) {
+                            System.out.println("There is no such book");
+                            continue;
+                        }
+                        while (true){
+                            System.out.println(bookToBeUpdated.toString());
+                            System.out.println("1-Edit book Author name");
+                            System.out.println("2-Edit book Title");
+                            System.out.println("3-Edit book Genre");
+                            System.out.println("4-Edit book Price");
+                            System.out.println("5-Edit book Publish Date");
+                            System.out.println("6-Edit book Description");
+                            System.out.println("7-Done");
+                            int editChoice = scanner.nextInt();
+                            scanner.nextLine();
+                            switch (editChoice){
+                                case 1:
+                                    System.out.println("Enter the book Author name");
+                                    String newAuthor= checkers.checkAuthorName();
+                                    bookToBeUpdated.setAuthor(newAuthor);
+                                    continue;
+                                case 2:
+                                    System.out.println("Enter the book Title");
+                                    String newTitle = scanner.nextLine();
+                                    bookToBeUpdated.setTitle(newTitle);
+                                    continue;
+                                case 3:
+                                    System.out.println("Enter the book Genre (Science, Fiction, Drama)");
+                                    String newGenre= checkers.checkGenre();
+                                    bookToBeUpdated.setGenre(newGenre);
+                                    continue;
+                                case 4://genre
+                                    System.out.println("Enter the book Price");
+                                    double newPrice=checkers.checkPrice();
+                                    bookToBeUpdated.setPrice(newPrice);
+                                    continue;
+                                case 5:
+                                    System.out.println("Enter the book Publish Date");
+                                    String newDate = checkers.checkDate();
+                                    bookToBeUpdated.setPublish_Date(newDate);
+                                    continue;
+                                case 6:
+                                    System.out.println("Enter the book Description");
+                                    String newDescription = scanner.nextLine();
+                                    bookToBeUpdated.setDescription(newDescription);
+                                    continue;
+                                case 7:
+                                    break;
+                                default:
+                                    System.out.println("Wrong input");
+                                    continue;
+                            }
+                            break;
+                        }
+                        demo.deleteBook(document, bookToBeUpdated.getId(), transf);
+                        demo.addToFile(document, bookToBeUpdated, transf);
+                        break;
+                    case 6://exit
+                        return ;
+                    default:
+                        System.out.println("Wrong input");
                 }
             }
 //-------------------------------------------------------
