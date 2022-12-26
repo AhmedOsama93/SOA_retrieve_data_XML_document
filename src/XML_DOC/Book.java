@@ -79,7 +79,18 @@ public class Book {
     public String getDescription() {
         return Description;
     }
-
+    public String getAttributeByIndex(int attributeIndex){
+        return switch (attributeIndex) {
+            case 0 -> Id;
+            case 1 -> Author;
+            case 2 -> Title;
+            case 3 -> Genre;
+            case 4 -> Double.toString(Price);
+            case 5 -> Publish_Date;
+            case 6 -> Description;
+            default -> "";
+        };
+    }
     @Override
     public String toString() {
         return "Book{" +
@@ -93,14 +104,4 @@ public class Book {
                 '}';
     }
 }
-//<Catalogue>
-//<Book ID =”BK101”>
-//<Author>Gambardella, Matthew</Author>
-//<Title>XML Developer’s Guide</Title>
-//<Genre>Computer</Genre>
-//<Price>44.95</Price>
-//<Publish_Date>2000-11-01</ Publish_Date >
-//
-//<Description>A guide for developers on how to create applications using XML.</ Description>
-//</Book>
-//</Catalogue>
+

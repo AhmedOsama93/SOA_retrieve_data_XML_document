@@ -120,7 +120,18 @@ public class XMLParsingDemo {
             System.out.println(book.toString());
         }
     }
-
+    void sortFile(Document document,Transformer transf,int attributeIndex,boolean ascending){
+        List<Book> books = parsingFile(document);
+        Collections.sort(books,new Comparator<Book>(){
+            public int compare(Book b1, Book b2) {
+                if(ascending)
+                    return b1.getAttributeByIndex(attributeIndex).compareTo(b2.getAttributeByIndex(attributeIndex));
+                return b2.getAttributeByIndex(attributeIndex).compareTo(b1.getAttributeByIndex(attributeIndex));
+            }
+        });
+        deleteAllBooks( document,transf);
+        saveListToFile(document ,transf,books);
+    }
 
     void addToFile(Document document,Book newBook,Transformer transf){
         try {
@@ -131,6 +142,36 @@ public class XMLParsingDemo {
             DOMSource source = new DOMSource(document);
             File myFile = new File("src/XML_DOC/Catalogue.xml");
             StreamResult file = new StreamResult(myFile);
+            transf.transform(source, file);
+        }
+        catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    void saveListToFile(Document document ,Transformer transf,List<Book> books){
+        Element root = document.getDocumentElement();
+
+        for (Book book : books){
+            Node book1 = createBook(document,book.Id,book.Author,book.Title,book.Genre,book.Price,book.Publish_Date,book.Description);
+            root.appendChild(book1);
+        }
+        try {
+            DOMSource source = new DOMSource(document);
+            File myFile = new File("src/XML_DOC/Catalogue.xml");
+            StreamResult file = new StreamResult(myFile);
+            transf.transform(source, file);
+        }catch (Exception e){}
+    }
+    void deleteAllBooks(Document document,Transformer transf){
+
+        Node root = document.getDocumentElement();
+        while(root.hasChildNodes()){
+            root.removeChild(root.getFirstChild());
+        }
+        DOMSource source = new DOMSource(document);
+        File myFile = new File("src/XML_DOC/Catalogue.xml");
+        StreamResult file = new StreamResult(myFile);
+        try {
             transf.transform(source, file);
         }
         catch (TransformerException e) {
@@ -217,7 +258,8 @@ public class XMLParsingDemo {
                 System.out.println("3:delete a record");
                 System.out.println("4:search");
                 System.out.println("5:update");
-                System.out.println("6:exit");
+                System.out.println("6:sort file");
+                System.out.println("7:exit");
                 Scanner scanner = new Scanner(System.in);
                 int input;
                 try {
@@ -346,7 +388,40 @@ public class XMLParsingDemo {
                         demo.deleteBook(document, bookToBeUpdated.getId(), transf);
                         demo.addToFile(document, bookToBeUpdated, transf);
                         break;
-                    case 6://exit
+                    case 6://sort
+                        System.out.println("Choose  to sort on");
+                        System.out.println("1-Id");
+                        System.out.println("2-Author");
+                        System.out.println("3-Title");
+                        System.out.println("4-Genre");
+                        System.out.println("5-Price");
+                        System.out.println("6-Publish_Date");
+                        System.out.println("7-Description");
+                        int sortChoice;
+                        while (true){
+                            try {
+                                sortChoice = scanner.nextInt();
+                                scanner.nextLine();
+                                break;
+                            }catch (Exception e){
+                                scanner.nextLine();
+                                System.out.println("wrong input");
+                            }
+                        }
+                        System.out.println("do you want to sort it ascending (Enter 'Y' or 'N')");
+                        boolean sortAscending = false;
+                        String sortChoice2;
+                        while (true){
+                            sortChoice2 = scanner.nextLine();
+                            if(sortChoice2.equals("y")||sortChoice2.equals("Y")||sortChoice2.equals("n")||sortChoice2.equals("N"))
+                                break;
+                            System.out.println("Wrong input enter 'Y' or 'N' ");
+                        }
+                        if (sortChoice2.equals("y")||sortChoice2.equals("Y"))
+                            sortAscending = true;
+                        demo.sortFile( document,transf, sortChoice-1, sortAscending);
+                        break;
+                    case 7://exit
                         return ;
                     default:
                         System.out.println("Wrong input");
@@ -360,9 +435,7 @@ public class XMLParsingDemo {
 
     }
 
-    private static Node createBook(Document doc, String id, String Author,
-                                   String Title, String Genre,double Price, String Publish_Date,String Description) {
-
+    private static Node createBook(Document doc, String id, String Author,String Title, String Genre,double Price, String Publish_Date,String Description) {
         Element book = doc.createElement("Book");
         book.setAttribute("ID", id);
         book.appendChild(createBookElement(doc, "Author", Author));
