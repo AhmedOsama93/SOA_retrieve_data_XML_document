@@ -40,4 +40,12 @@
         <Publish_Date>2000-11-01</Publish_Date>
         <Description>A guide for developers on how to create applications using XML.</Description>
     </Book>
+    <Book ID="112">
+        <Author>hhh</Author>
+        <Title>jjjj</Title>
+        <Genre>Fiction</Genre>
+        <Price>100.0</Price>
+        <Publish_Date>Mon Dec 12 00:00:00 EET 12</Publish_Date>
+        <Description>jgjdfjf</Description>
+    </Book>
 </Catalogue>

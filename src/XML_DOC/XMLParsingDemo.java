@@ -14,6 +14,9 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
+
+import static java.lang.Double.parseDouble;
+
 public class XMLParsingDemo {
     //enum Genres {Science, Fiction, Drama}
     static Map<String, Boolean>perviousIds = new HashMap<String, Boolean>();
@@ -38,7 +41,7 @@ public class XMLParsingDemo {
                 String genre = elem.getElementsByTagName("Genre")
                         .item(0).getChildNodes().item(0).getNodeValue();
 
-                Double price = Double.parseDouble(elem.getElementsByTagName("Price")
+                Double price = parseDouble(elem.getElementsByTagName("Price")
                         .item(0).getChildNodes().item(0).getNodeValue());
 
                 String publish_Date = elem.getElementsByTagName("Publish_Date")
@@ -53,6 +56,63 @@ public class XMLParsingDemo {
         }
         return books;
     }
+    List<Book>searchByAnyTagName(Document document, String searchMethod, String wanted) {
+        NodeList nodeList = document.getDocumentElement().getChildNodes();
+        List<Book> books = new ArrayList<Book>();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            Boolean flag=false;
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element elem = (Element) node;
+                // Get the value of the ID attribute.
+                String id = node.getAttributes().getNamedItem("ID").getNodeValue();
+                if (searchMethod.equals("id") && id.equals(wanted)){
+                    flag =true;
+                }
+                // Get the value of all sub-elements.
+                String author = elem.getElementsByTagName("Author")
+                        .item(0).getChildNodes().item(0).getNodeValue();
+                if (searchMethod.equals("author") && author.equals(wanted)){
+                    flag =true;
+                }
+                String title = elem.getElementsByTagName("Title").item(0)
+                        .getChildNodes().item(0).getNodeValue();
+                if (searchMethod.equals("title") && title.equals(wanted)){
+                    flag =true;
+                }
+                String genre = elem.getElementsByTagName("Genre")
+                        .item(0).getChildNodes().item(0).getNodeValue();
+                if (searchMethod.equals("genre") && genre.equals(wanted)){
+                    flag =true;
+                }
+
+                Double price = parseDouble(elem.getElementsByTagName("Price")
+                        .item(0).getChildNodes().item(0).getNodeValue());
+                if (searchMethod.equals("price") && price == parseDouble(wanted)){
+                    flag =true;
+                }
+                String publish_Date = elem.getElementsByTagName("Publish_Date")
+                        .item(0).getChildNodes().item(0).getNodeValue();
+                if (searchMethod.equals("publish_Date") && publish_Date.equals(wanted)){
+                    flag =true;
+                }
+
+                String description = elem.getElementsByTagName("Description")
+                        .item(0).getChildNodes().item(0).getNodeValue();
+                if (searchMethod.equals("description") && description.equals(wanted)){
+                    flag =true;
+                }
+//String id, String author, String title, String genre,
+//                double price, Date publish_Date, String description
+                if (flag) {
+                    books.add(new Book(id, author, title, genre, price, publish_Date, description));
+                }
+            }
+        }
+        return books;
+    }
+
+
 
     void printFile(Document document){
         List<Book>books=parsingFile(document);
@@ -123,7 +183,6 @@ public class XMLParsingDemo {
         }
         return null;
     }
-
     public static void main(String[] args) {
         try {
             //Get Document Builder
@@ -214,19 +273,16 @@ public class XMLParsingDemo {
                         demo.deleteBook(document, deleteId, transf);
                         break;
                     case 4://search
-                        System.out.println("1: Search by title");
-                        System.out.println("2: Search by Author");
+                        String searchMethod, wantedValue;
                         Scanner scanner1 = new Scanner(System.in);
-                        int wayForSearch = scanner1.nextInt();
-                        scanner1.nextLine();
-                        if (wayForSearch == 1) {
-                            System.out.println("Enter the book Title");
-                            String tit = scanner1.nextLine();
-                            demo.findBookByTitle(document, tit);
-                        } else if (wayForSearch == 2) {
-                            System.out.println("Enter the book Author");
-                            String aut = scanner.nextLine();
-                            demo.findBookByAuthor(document, aut);
+                        System.out.println("Enter search Method id or Author or Title or Genre or Price or Publish_Date or Description");
+                        searchMethod = scanner1.nextLine();
+                        System.out.println("Enter the book id or Author or Title or Genre or Price or Publish_Date or Description");
+                        wantedValue = scanner1.nextLine();
+                        List<Book>books=demo.searchByAnyTagName(document,searchMethod,wantedValue);
+                        System.out.println("Number of books = "+books.size());
+                        for (Book book : books) {
+                            System.out.println(book.toString());
                         }
                         break;
                     case 5://update
