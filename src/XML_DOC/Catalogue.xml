@@ -16,4 +16,28 @@
         <Publish_Date>2000-11-01</Publish_Date>
         <Description>A guide for developers on how to create applications using XML.</Description>
     </Book>
+    <Book ID="BK102">
+        <Author>ahmed</Author>
+        <Title>rrrr</Title>
+        <Genre>nhfkdhniofgd</Genre>
+        <Price>100.0</Price>
+        <Publish_Date>11-11-11</Publish_Date>
+        <Description>hjigdsuoguodshighduksagiodsfuo;ahuifhapsd jigvidsguiodsfofhdsgdsfhds</Description>
+    </Book>
+    <Book ID="hasdhlf">
+        <Author>dsdsf</Author>
+        <Title>sfsfd</Title>
+        <Genre>Science</Genre>
+        <Price>5.0</Price>
+        <Publish_Date>Mon Dec 26 05:27:49 EET 2022</Publish_Date>
+        <Description>kdfs</Description>
+    </Book>
+    <Book ID="111">
+        <Author>hhh</Author>
+        <Title>hhhh</Title>
+        <Genre>Drama</Genre>
+        <Price>6.0</Price>
+        <Publish_Date>Tue May 05 00:00:00 EET 5</Publish_Date>
+        <Description>sss</Description>
+    </Book>
 </Catalogue>

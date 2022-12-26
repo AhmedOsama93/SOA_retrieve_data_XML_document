@@ -1,7 +1,6 @@
 package XML_DOC;
 import java.io.File;
 import java.util.*;
-import javax.print.attribute.Attribute;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.*;
@@ -15,10 +14,10 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
-
-
 public class XMLParsingDemo {
+    //enum Genres {Science, Fiction, Drama}
     static Map<String, Boolean>perviousIds = new HashMap<String, Boolean>();
+
     List<Book>parsingFile(Document document) {
         List<Book> books = new ArrayList<Book>();
         NodeList nodeList = document.getDocumentElement().getChildNodes();
@@ -54,6 +53,7 @@ public class XMLParsingDemo {
         }
         return books;
     }
+
     void printFile(Document document){
         List<Book>books=parsingFile(document);
         for (Book book : books) {
@@ -68,7 +68,6 @@ public class XMLParsingDemo {
             Element root = document.getDocumentElement();
             Node book1 = createBook(document,newBook.Id,newBook.Author,newBook.Title,newBook.Genre,newBook.Price,newBook.Publish_Date,newBook.Description);
             root.appendChild(book1);
-
             DOMSource source = new DOMSource(document);
             File myFile = new File("src/XML_DOC/Catalogue.xml");
             StreamResult file = new StreamResult(myFile);
@@ -143,6 +142,8 @@ public class XMLParsingDemo {
 //-------------------------------------------------------our functions()
             System.out.println("Hello :)");
             while (true){
+                Checkers checkers = new Checkers();
+
                 System.out.println("1:print all records");
                 System.out.println("2:add new record");
                 System.out.println("3:delete a record");
@@ -151,66 +152,68 @@ public class XMLParsingDemo {
                 Scanner scanner = new Scanner(System.in);
                 int input = scanner.nextInt();
                 scanner.nextLine();
-                if(input==1){
-                    demo.printFile(document);
-                }
-                else if (input==2){
-                    Book newBook=new Book();
-                    System.out.println("Enter the book Id");
-                    String id=scanner.nextLine();
-                    if(perviousIds.get(id)!=null && perviousIds.get(id)==true){
-                        System.out.println("This id was added before.\n");
-                        continue;
-                    }
-                    System.out.println("Enter the book Author");
-                    String author=scanner.nextLine();
-                    System.out.println("Enter the book Title");
-                    String title=scanner.nextLine();
-                    System.out.println("Enter the book Genre");
-                    String genre=scanner.nextLine();
-                    System.out.println("Enter the book Price");
-                    double price = scanner.nextDouble();
-                    scanner.nextLine();
-                    System.out.println("Enter the book Publish Date");
-                    String date = scanner.nextLine();
-                    System.out.println("Enter the book Description");
-                    String description = scanner.nextLine();
+                switch(input) {
+                    case 1:
+                        demo.printFile(document);
+                        break;
+                    case 2:
+                        Book newBook = new Book();
+                        System.out.println("Enter the book Id");
+                        String id = checkers.checkPreviousId(perviousIds);
 
-                    //***********************************************
-                    newBook.setId(id);
-                    newBook.setAuthor(author);
-                    newBook.setTitle(title);
-                    newBook.setGenre(genre);
-                    newBook.setPrice(price);
-                    newBook.setPublish_Date(date);
-                    newBook.setDescription(description);
+                        System.out.println("Enter the book Author name");
+                        String author = checkers.checkAuthorName();
 
-                    demo.addToFile(document,newBook,transf);
-                }
-                else if (input==3){
-                    System.out.println("Enter Id to be deleted:");
-                    String deleteId = scanner.nextLine();
-                    demo.deleteBook(document,deleteId,transf);
-                }
-                else if (input==4){
-                    System.out.println("1: Search by title");
-                    System.out.println("2: Search by Author");
-                    Scanner scanner1 = new Scanner(System.in);
-                    int wayForSearch=scanner1.nextInt();
-                    scanner1.nextLine();
-                    if (wayForSearch==1){
                         System.out.println("Enter the book Title");
-                        String tit = scanner1.nextLine();
-                        demo.findBookByTitle(document,tit);
-                    }
-                    else if (wayForSearch==2){
-                        System.out.println("Enter the book Author");
-                        String aut = scanner.nextLine();
-                        demo.findBookByAuthor(document,aut);
-                    }
-                }
-                else if (input==5){
-                    break;
+                        String title = scanner.nextLine();
+
+                        System.out.println("Enter the book Genre (Science, Fiction, Drama)");
+                        String genre;
+                        genre= checkers.checkGenre();
+
+                        System.out.println("Enter the book Price");
+                        double price;
+                        price=checkers.checkPrice();
+
+                        System.out.println("Enter the book Publish Date");
+                        String date = checkers.checkDate();
+
+                        System.out.println("Enter the book Description");
+                        String description = scanner.nextLine();
+
+                        //***********************************************
+                        newBook.setId(id);
+                        newBook.setAuthor(author);
+                        newBook.setTitle(title);
+                        newBook.setGenre(genre);
+                        newBook.setPrice(price);
+                        newBook.setPublish_Date(date);
+                        newBook.setDescription(description);
+
+                        demo.addToFile(document, newBook, transf);
+                        break;
+                    case 3:
+                        System.out.println("Enter Id to be deleted:");
+                        String deleteId = scanner.nextLine();
+                        demo.deleteBook(document, deleteId, transf);
+                        break;
+                    case 4:
+                        System.out.println("1: Search by title");
+                        System.out.println("2: Search by Author");
+                        Scanner scanner1 = new Scanner(System.in);
+                        int wayForSearch = scanner1.nextInt();
+                        scanner1.nextLine();
+                        if (wayForSearch == 1) {
+                            System.out.println("Enter the book Title");
+                            String tit = scanner1.nextLine();
+                            demo.findBookByTitle(document, tit);
+                        } else if (wayForSearch == 2) {
+                            System.out.println("Enter the book Author");
+                            String aut = scanner.nextLine();
+                            demo.findBookByAuthor(document, aut);
+                        }
+                        break;
+                    case 5: return ;
                 }
             }
 //-------------------------------------------------------
@@ -254,6 +257,4 @@ public class XMLParsingDemo {
         node.appendChild(doc.createTextNode(value));
         return node;
     }
-
-
 }
