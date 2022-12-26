@@ -102,8 +102,6 @@ public class XMLParsingDemo {
                 if (searchMethod.equals("description") && description.equals(wanted)){
                     flag =true;
                 }
-//String id, String author, String title, String genre,
-//                double price, Date publish_Date, String description
                 if (flag) {
                     books.add(new Book(id, author, title, genre, price, publish_Date, description));
                 }
@@ -238,10 +236,15 @@ public class XMLParsingDemo {
 
                         System.out.println("Enter the book Author name");
                         String author = checkers.checkAuthorName();
-
+                        String title;
                         System.out.println("Enter the book Title");
-                        String title = scanner.nextLine();
-
+                        while(true) {
+                            title = scanner.nextLine();
+                            if (!title.isBlank()) {
+                                break;
+                            }
+                            System.out.println("This title is not available.");
+                        }
                         System.out.println("Enter the book Genre (Science, Fiction, Drama)");
                         String genre;
                         genre= checkers.checkGenre();

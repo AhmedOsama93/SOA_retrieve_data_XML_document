@@ -26,12 +26,14 @@ public class Checkers {
         while (true) {
             author = scanner.nextLine();
             try {
-                if (checkAuthorAlphapit(author)) {
-                    break;
-                }
                 System.out.println("Enter the book Author name");
-            } catch (Exception e) {
             }
+            catch (Exception e) {
+            }
+            if (!author.isBlank() && checkAuthorAlphapit(author) && author != null) {
+                break;
+            }
+            System.out.println("This author name is not available.");
         }
         return author;
     }
@@ -61,14 +63,15 @@ public class Checkers {
             try {
                 id = scanner.nextLine();
                 if (perviousIds.get(id) != null && perviousIds.get(id) == true) {
-                    System.out.println("This id was added before.\n");
                     continue;
                 }
+            } catch (Exception e) {
             }
-            catch (Exception e) {
+            if (!id.isBlank()) {
+                perviousIds.put(id, true);
+                break;
             }
-            perviousIds.put(id, true);
-            break;
+            System.out.println("This id is not available.");
         }
         return id;
     }
@@ -80,7 +83,8 @@ public class Checkers {
                 price = scanner.nextDouble();
                 scanner.nextLine();
                 break;
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 scanner.nextLine();
                 System.out.println("Enter double value");
             }
@@ -95,8 +99,11 @@ public class Checkers {
             try {
                 Date date = new SimpleDateFormat("dd/MM/yyyy").parse(strDate);
                 d = String.valueOf(date);
-                break;
-            } catch (ParseException e) {
+                if (!d.isBlank()) {
+                    break;
+                }
+            }
+            catch (ParseException e) {
                 System.out.println("enter date in Date format yyyy-MM-dd");
             }
         }

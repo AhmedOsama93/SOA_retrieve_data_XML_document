@@ -24,36 +24,28 @@
         <Publish_Date>Mon Dec 26 05:27:49 EET 2022</Publish_Date>
         <Description>kdfs</Description>
     </Book>
-    <Book ID="111">
-        <Author>hhh</Author>
-        <Title>hhhh</Title>
-        <Genre>Drama</Genre>
-        <Price>6.0</Price>
-        <Publish_Date>Tue May 05 00:00:00 EET 5</Publish_Date>
-        <Description>sss</Description>
+    <Book ID="Bk122">
+        <Author>ahmed</Author>
+        <Title>sss</Title>
+        <Genre>Science</Genre>
+        <Price>15.0</Price>
+        <Publish_Date>Sun Mar 15 00:00:00 EET 16</Publish_Date>
+        <Description>bsahsd</Description>
     </Book>
-    <Book ID="BK103">
-        <Author>abdoabdoh</Author>
-        <Title>abdo wrote this book</Title>
-        <Genre>Computer</Genre>
-        <Price>99.0</Price>
-        <Publish_Date>2000-11-01</Publish_Date>
-        <Description>A guide for developers on how to create applications using XML.</Description>
-    </Book>
-    <Book ID="112">
-        <Author>hhh</Author>
-        <Title>jjjj</Title>
+    <Book ID="ffff">
+        <Author/>
+        <Title>hkhfdhdf</Title>
         <Genre>Fiction</Genre>
-        <Price>100.0</Price>
-        <Publish_Date>Mon Dec 12 00:00:00 EET 12</Publish_Date>
-        <Description>jgjdfjf</Description>
+        <Price>15.0</Price>
+        <Publish_Date>Wed Nov 11 00:00:00 EET 11</Publish_Date>
+        <Description>askasgjk</Description>
     </Book>
-    <Book ID="ssss">
-        <Author>ssssss</Author>
-        <Title>ssss</Title>
-        <Genre>Drama</Genre>
-        <Price>12.0</Price>
-        <Publish_Date>Tue Dec 12 00:00:00 EET 13</Publish_Date>
-        <Description>suigsdo</Description>
+    <Book ID="111">
+        <Author/>
+        <Title>ddd</Title>
+        <Genre>Fiction</Genre>
+        <Price>15.0</Price>
+        <Publish_Date>Sun Mar 15 00:00:00 EET 16</Publish_Date>
+        <Description>zxz</Description>
     </Book>
 </Catalogue>
